@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ToDoList</title>
+        <style>
+            h1{
+                color: #0a9396;
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            }
+            #botao{
+                margin: 2em;
+                border: 1px solid #0a9396;
+                top: 8px;
+                width: 100px;
+                padding: 4px;
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+                font-size: 10px;
+            }
+            #botao:hover{
+                margin: 2em;
+                border: 1px solid #0a9396;
+                width: 100px;
+                padding: 4px;
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+                font-size: 10px;
+                color: white;
+                background-color: #0a9396;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>To do list</h1>
+
+        <input type="text" id="texto" name="text"/>
+        <input type="submit" onclick="eventoClick()" value="Adicionar" id="botao"/><hr>
+        <div id="tarefas"></div>
+
+        <script>
+            var tarefas = new Array()
+
+            function teste(){
+                var texto = document.getElementById("texto")
+                if(texto.value == ""){
+                    return false
+                }else{
+                    return true
+                }
+            }
+
+            function eventoClick(){
+                if(teste() == false){
+                    alert("Informe uma tarefa")
+                    texto.focus()
+                }else{
+                    /*Pegando o texto inserido pelo usuário*/
+                    var tarefa = document.getElementById("texto").value
+
+                    /*Adicionando a tarefa na lista*/
+                    tarefas.push(tarefa)
+                    
+                    /*Linpando a barra de pesquisa*/
+                    document.getElementById("texto").value = ""
+
+                    /*Chamando a função exibir*/
+                    exibir(tarefas)
+                }
+            }
+
+            function exibir(tarefas){
+                /*Limpando a div de id = tarefas*/
+                document.getElementById("tarefas").innerHTML = "";
+
+                /*Varrendo o vetor tarefas e criando uma div correspondente à cada tarefa*/
+                for(var i=0; i<tarefas.length; i++){
+                    var div = document.createElement("div")
+                    div.innerHTML = `${tarefas[i]} <button id="excluir" onclick="excluir(${i})">✔</button>`
+                    var divTarefas = document.getElementById("tarefas")
+                    divTarefas.appendChild(div)
+                }
+
+            }
+
+            function excluir(id){
+                tarefas.splice(id, 1)
+                exibir(tarefas)
+            }
+        </script>
+    </body>
+</html>
